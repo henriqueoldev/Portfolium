@@ -1,0 +1,10 @@
+---
+interface Props {
+  btnId: string;
+}
+const { btnId } = Astro.props;
+---
+
+<button id={btnId} class="cursor-pointer p-1 border-1 border-gray-700 rounded hover:bg-gray-300 hover:shadow-sm">
+  <slot />
+</button>
