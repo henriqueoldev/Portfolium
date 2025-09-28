@@ -1,1 +1,37 @@
 @import "tailwindcss";
+
+.mdContent {
+    line-height: 1.8rem;
+}
+
+.mdContent h1{
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.mdContent h2{
+    font-size: 1.5rem;
+}
+
+.mdContent hr{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.mdContent p{
+    margin-bottom: 1rem;
+}
+
+.mdContent table th{
+    background-color: var(--color-gray-400);
+    color: var(--color-white);
+    padding: .4rem;
+}
+
+tbody{
+    background-color: var(--color-gray-200);
+}
+
+.mdContent table td{
+    padding: .3rem;
+}

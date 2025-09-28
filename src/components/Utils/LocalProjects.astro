@@ -1,0 +1,21 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import ContentCard from '../UI/ContentCard.astro';
+
+const projects = await getCollection('projects');
+
+---
+
+{
+    projects.map(
+        project => (
+            <ContentCard
+                title={project.data.title}
+                description={project.data.description}
+                linkUrl={"/"+ project.id}
+                tags={project.data.languages || ['Other']}
+                imageUrl={project.data.imageUrl}
+            />
+        )
+    )
+}
