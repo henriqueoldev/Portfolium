@@ -1,7 +1,29 @@
 {
   "name": "John Doe",
-  "description": "A passionate software developer with experience in web development and machine learning.",
+  "description": "A passionate software developer with experience in web development and machine learning. Working now technologies such as JavaScript, Python, HTML, CSS, React, Node.js, TensorFlow, and scikit-learn. With a strong focus on creating dynamic web applications and intelligent solutions, I'am always seeking to enhance my skills and contribute to innovative projects.",
   "shortDesc": "Fullstack Developer",
-  "github": "https://github.com/johndoe",
-  "linkedin": "https://www.linkedin.com/in/johndoe/"
+  "profilePicture": "/img/pp.jpg",
+  "githubAPI": "https://api.github.com/users/octocat",
+  "socialLinks": {
+    "linkedIn": {
+      "iconLink": "/img/icons/linkedin-logo.svg",
+      "name": "LinkedIn",
+      "link": "https://www.linkedin.com/in/johndoe"
+    },
+    "github": {
+      "iconLink": "/img/icons/github-logo.svg",
+      "name": "Github",
+      "link": "https://www.github.com/johndoe"
+    },
+    "Email": {
+      "iconLink": "/img/icons/envelope.svg",
+      "name": "Email",
+      "link": "mailto:johndoe@gmail.com"
+    },
+    "Matrix": {
+      "iconLink": "/img/icons/matrix-logo.svg",
+      "name": "Matrix",
+      "link": "https://matrix.to/#/@johndoe:matrix.org"
+    }
+  }
 }

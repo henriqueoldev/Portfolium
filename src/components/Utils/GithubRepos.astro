@@ -1,0 +1,41 @@
+---
+import ContentCard from "../UI/ContentCard.astro";
+import { getSecret, } from 'astro:env/server';
+
+interface Props {
+  githubUserAPIURL: string
+}
+const { githubUserAPIURL } = Astro.props;
+
+const githubReposResp = await fetch(githubUserAPIURL+'/repos?sort=updated&direction=desc&per_page=100', {
+    method: 'GET',
+    headers: {
+        'Authorization': 'token ' + getSecret('GITHUB_API_KEY'),
+        'Accept': 'application/vnd.github+json'
+    }
+})
+const reposData = await githubReposResp.json()
+
+---
+
+{
+  reposData?.map(
+    (repo: {
+      id: number;
+      name: string;
+      html_url: string;
+      description: string | null;
+      language: string;
+      stargazers_count: number;
+    }) => (
+        <ContentCard
+            title={repo.name}
+            description={repo.description || 'This repo doesn\'t have a Description :('}
+            imageUrl=""
+            linkUrl={repo.html_url}
+            tags={[repo.language || 'Other']}
+            stars={repo.stargazers_count}
+        />
+    )
+  )
+}

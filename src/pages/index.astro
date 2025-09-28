@@ -1,7 +1,18 @@
 ---
+import Container from "../components/UI/Container.astro"
+import ProfileCard from "../components/UI/ProfileCard.astro"
 import Layout from "../layouts/Layout.astro"
+import userData from "../config/UserData.json"
+import ContentSection from "../components/UI/ContentSection.astro"
+import ContentCard from "../components/UI/ContentCard.astro"
+import GithubRepos from "../components/Utils/GithubRepos.astro"
 ---
 
 <Layout>
-	<h1>Astro</h1>
+	<Container>
+		<ProfileCard title={userData.name} desc={userData.description} img={userData.profilePicture} socialLinks={userData.socialLinks}/>
+		<ContentSection title="Github">
+			<GithubRepos githubUserAPIURL={userData.githubAPI} server:defer>
+		</ContentSection>
+	</Container>
 </Layout>

@@ -1,0 +1,32 @@
+---
+import Liner from './Liner.astro'
+import SocialIcon from './SocialIcon.astro'
+
+interface Props {
+    img: string,
+    title: string,
+    desc: string,
+    socialLinks: any
+}
+const {img, title, desc, socialLinks} = Astro.props
+---
+
+<section class="h-full flex flex-col sm:flex-row gap-5 align-center items-center p-5 rounded-xl bg-gray-200/50 backdrop-blur-[1rem] 2xl:text-2xl">
+    <div class=" min-w-[32%] max-w-[32%] lg:min-w-[20%] lg:max-w-[20%] aspect-square flex align-center justify-center gap-5 rounded-full border-2 border-gray-800 overflow-hidden">
+        <img src={img} alt="User Picture" class="w-full aspect-square object-cover">
+    </div>
+    <div>
+        <h1 class="text-center sm:text-left text-3xl 2xl:text-4xl">{title}</h1>
+        <Liner/>
+        <p class="text-justify">{desc}</p>
+        <div class="flex align-center justify-center sm:justify-start gap-2 mt-1">
+            {
+            Object.keys(socialLinks).map(link => (
+                    <a href={socialLinks[link].link} target="_blank" rel="noopener noreferrer">
+                        <SocialIcon socialName={socialLinks[link].name} iconLink={socialLinks[link].iconLink}/>
+                    </a>
+                ))
+            }
+        </div>
+    </div>
+</section>
