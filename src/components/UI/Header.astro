@@ -8,9 +8,9 @@ import { ListIcon, HouseSimpleIcon, SunDimIcon } from "@phosphor-icons/react";
 import DefaultButton from "./DefaultButton.astro";
 ---
 
-<header class="flex justify-between items-center p-5 bg-gray-200 w-screen shadow-sm">
+<header class="flex justify-between items-center p-5 bg-fg-light dark:bg-fg-dark w-screen shadow-sm">
   <a href="/" class="flex flex-col">
-    <h1 class="bg-emerald-400 flex gap-3 items-center pl-1 text-3xl w-fit text-black after:inline-block after:w-5 after:h-9 after:bg-linear-to-r after:from-transparent after:to-emerald-500 after:to-70%">
+    <h1 class="bg-primary-500 flex gap-3 items-center pl-1 text-3xl w-fit text-text-light after:inline-block after:w-5 after:h-9 after:bg-linear-to-r after:from-transparent after:to-primary-600 after:to-70%">
       {title}
     </h1>
     <h3 class="max-w-xl pl-1">
@@ -18,7 +18,7 @@ import DefaultButton from "./DefaultButton.astro";
     </h3>
   </a>
   <nav>
-    <ul class="flex gap-2 text-3xl">
+    <ul class="flex gap-2 text-3xl text-text-light dark:text-text-dark">
       <li>
         <DefaultButton btnId="btnHome"><HouseSimpleIcon /></DefaultButton>
       </li>
@@ -32,5 +32,11 @@ import DefaultButton from "./DefaultButton.astro";
   const btnHome = document.getElementById("btnHome");
   btnHome?.addEventListener("mousedown", () => {
     window.location.href = "/";
+  });
+
+  const btnTheme = document.getElementById("btnTheme");
+  btnTheme?.addEventListener("mousedown", () => {
+    document.body?.classList.toggle('dark')
+		localStorage.setItem('theme', localStorage.getItem('theme') == 'dark' ? 'light' : 'dark')
   });
 </script>

@@ -12,8 +12,16 @@ import "../styles/global.css";
 		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/style.css"/>
 		<title>Astro</title>
 	</head>
-	<body class="flex flex-col justify-center items-center text-gray-800">
+	<body class="flex flex-col justify-center items-center bg-light dark:bg-bg-dark text-text-light dark:text-text-dark">
 		<Header title={userData.name} subTitle={userData.shortDesc}/>
 		<slot/>
 	</body>
+	<script>
+		window.onload = () => {
+			localStorage.setItem('theme', localStorage.getItem('theme') ? localStorage.getItem('theme') || '' : (window.matchMedia("(prefers-color-scheme: dark)") ? 'dark' : 'light'))
+			if (localStorage.getItem('theme') == 'dark') {
+				document.body.classList.add('dark')
+			}
+		};
+	</script>
 </html>

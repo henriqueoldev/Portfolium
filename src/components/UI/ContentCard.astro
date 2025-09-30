@@ -15,7 +15,7 @@ if (stars) {
     starsText = stars + ' ⭐'
 }
 ---
-<a href={linkUrl} target="_blank" class="bg-gray-200 flex gap-2 flex-col justify-between p-3 rounded-lg w-full cursor-pointer hover:shadow-sm">
+<a href={linkUrl} target="_blank" class="bg-fg-light dark:bg-fg-dark flex gap-2 flex-col justify-between p-3 rounded-lg w-full cursor-pointer hover:shadow-sm">
     <div class="flex flex-col w-full">
         <img class="w-full max-h-50 object-cover rounded-lg indent-[100%] text-[0px] whitespace-nowrap overflow-hidden" src={imageUrl} alt={'Image of a project named: ' + title} />
         <div class="flex justify-between gap-2">
@@ -24,10 +24,10 @@ if (stars) {
         </div>
         <p class="break-all">{description}</p>
     </div>
-    <div class="flex flex-wrap align-center gap-2 text-gray-100 font-bold">
+    <div class="flex flex-wrap align-center gap-1 text-gray-100 font-bold">
         {
             tags?.map(tag => (
-                <div class="flex justify-center align-center text-sm p-1 bg-emerald-600 rounded-lg break">{tag}</div>
+                <div class="flex justify-center align-center text-sm p-1 bg-primary-600 rounded-lg break">{tag}</div>
             ))
         }
     </div>
