@@ -17,7 +17,6 @@ const githubReposResp = await fetch(githubUserAPIURL+'/repos?sort=updated&direct
 const reposData = await githubReposResp.json()
 
 ---
-
 {
   reposData?.map(
     (repo: {

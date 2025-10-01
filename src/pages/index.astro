@@ -6,6 +6,8 @@ import userData from "../config/UserData.json"
 import ContentSection from "../components/UI/ContentSection.astro"
 import GithubRepos from "../components/Utils/GithubRepos.astro"
 import LocalProjects from "../components/Utils/LocalProjects.astro"
+import Spinner from "../components/UI/Spinner.astro"
+Spinner
 ---
 
 <Layout>
@@ -16,7 +18,12 @@ import LocalProjects from "../components/Utils/LocalProjects.astro"
 		</ContentSection>
 		<ContentSection title="Github">
 			<GithubRepos githubUserAPIURL={userData.githubAPI} server:defer>
+				<div slot="fallback" class="col-span-full flex justify-center items-center">
+					<div class="w-[10%] h-auto aspect-square">
+						<Spinner/>
+					</div>
+				</div>
+			</GithubRepos>
 		</ContentSection>
-
 	</Container>
 </Layout>

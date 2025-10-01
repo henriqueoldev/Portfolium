@@ -2,26 +2,35 @@
 import userData from "../config/UserData.json";
 import Header from "../components/UI/Header.astro"
 import "../styles/global.css";
+import Loading from "../components/UI/Loading.astro";
 ---
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/style.css"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="color-scheme" content="dark">
 		<title>Astro</title>
 	</head>
-	<body class="flex flex-col justify-center items-center bg-light dark:bg-bg-dark text-text-light dark:text-text-dark">
-		<Header title={userData.name} subTitle={userData.shortDesc}/>
-		<slot/>
+	<body class="bg-light dark:bg-bg-dark text-text-light dark:text-text-dark overflow-hidden">
+		<Loading/>
+		<div class="flex flex-col justify-center items-center">
+			<Header title={userData.name} subTitle={userData.shortDesc}/>
+			<slot/>
+		</div>
 	</body>
 	<script>
+		document.querySelector('html')?.classList.add(localStorage.getItem('theme') || 'dark')
 		window.onload = () => {
+			document.querySelector('meta[name="color-scheme"]')?.setAttribute("content", localStorage.getItem('theme') || 'dark')
 			localStorage.setItem('theme', localStorage.getItem('theme') ? localStorage.getItem('theme') || '' : (window.matchMedia("(prefers-color-scheme: dark)") ? 'dark' : 'light'))
 			if (localStorage.getItem('theme') == 'dark') {
-				document.body.classList.add('dark')
+				document.querySelector('html')?.classList.add('dark')
 			}
+			document.body.classList.remove('overflow-hidden')
+			document.querySelector('.loading')?.classList.add('hidden')
 		};
-	</script>
+		</script>
 </html>
