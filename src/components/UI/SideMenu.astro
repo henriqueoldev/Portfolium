@@ -1,0 +1,26 @@
+---
+import { UserListIcon, XIcon } from "@phosphor-icons/react"
+import LocalProjectsList from "../Utils/LocalProjectsList.astro"
+import DefaultButton from "./DefaultButton.astro"
+---
+<nav id="modal" class="hidden fixed w-full h-screen bg-bg-light/50 dark:bg-bg-dark/50 z-10 backdrop-blur-[.1rem] flex">
+    <div id="closeModal" class="w-[0%] md:w-[200%]"></div>
+    <div class="bg-bg-light dark:bg-bg-dark w-full">
+        <div class="flex h-12 text-3xl w-full p-2 items-center justify-between group">
+            <DefaultButton btnId="closeModal">
+                <XIcon/>
+            </DefaultButton>
+        </div>
+        <ul>
+            <LocalProjectsList/>
+        </ul>
+    </div>
+</nav>
+
+<script>
+    document.querySelectorAll('#closeModal')?.forEach((item) => {
+        item.addEventListener('mousedown', () => {
+            document.getElementById('modal')?.classList.add('hidden')
+        })
+    })
+</script>

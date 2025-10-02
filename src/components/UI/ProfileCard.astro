@@ -1,6 +1,7 @@
 ---
-import Liner from './Liner.astro'
+import { LinkIcon } from '@phosphor-icons/react'
 import SocialIcon from './SocialIcon.astro'
+import Liner from './Liner.astro'
 
 interface Props {
     img: string,
@@ -11,12 +12,12 @@ interface Props {
 const {img, title, desc, socialLinks} = Astro.props
 ---
 
-<section class="h-full flex flex-col sm:flex-row gap-5 align-center items-center p-5 rounded-xl bg-fg-light/50 dark:bg-fg-dark backdrop-blur-[1rem] 2xl:text-2xl">
-    <div class=" min-w-[32%] max-w-[32%] lg:min-w-[20%] lg:max-w-[20%] aspect-square flex align-center justify-center gap-5 rounded-full border-2 border-gray-800 overflow-hidden">
+<section class="h-full flex flex-col sm:flex-row gap-5 align-center items-center p-5 rounded-xl bg-fg-light/50 dark:bg-fg-dark backdrop-blur-[1rem] 2xl:text-lg">
+    <div class=" min-w-[32%] max-w-[32%] lg:min-w-[20%] lg:max-w-[20%] aspect-square flex align-center justify-center gap-5 rounded-full border-3 border-fg-light-400 dark:border-fg-dark-700 overflow-hidden">
         <img src={img} alt="User Picture" class="w-full aspect-square object-cover">
     </div>
     <div>
-        <h1 class="text-center sm:text-left text-3xl 2xl:text-4xl">{title}</h1>
+        <a href="/resume" class="flex items-center gap-1"><h1 class="text-center sm:text-left font-medium text-3xl 2xl:text-4xl">{title}</h1><LinkIcon/></a>
         <Liner/>
         <p class="text-justify">{desc}</p>
         <div class="flex align-center justify-center sm:justify-start gap-2 mt-1">

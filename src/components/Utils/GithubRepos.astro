@@ -34,6 +34,7 @@ const reposData = await githubReposResp.json()
             linkUrl={repo.html_url}
             tags={[repo.language || 'Other']}
             stars={repo.stargazers_count}
+            target="_blank"
         />
     )
   )

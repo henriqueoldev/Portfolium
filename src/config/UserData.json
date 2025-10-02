@@ -2,7 +2,7 @@
   "name": "John Doe",
   "description": "A passionate software developer with experience in web development and machine learning. Working now with technologies such as JavaScript, Python, HTML, CSS, React, Node.js, TensorFlow, and scikit-learn. With a strong focus on creating dynamic web applications and intelligent solutions, I'am always seeking to enhance my skills and contribute to innovative projects.",
   "shortDesc": "Fullstack Developer",
-  "profilePicture": "/img/pp.jpg",
+  "profilePicture": "/img/pp.jpeg",
   "githubAPI": "https://api.github.com/users/octocat",
   "socialLinks": {
     "linkedIn": {

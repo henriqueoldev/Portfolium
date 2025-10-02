@@ -10,7 +10,7 @@ import DefaultButton from "./DefaultButton.astro";
 
 <header class="flex justify-between items-center p-5 bg-fg-light dark:bg-fg-dark w-screen shadow-sm">
   <a href="/" class="flex flex-col">
-    <h1 class="bg-primary-500 flex gap-3 items-center pl-1 text-3xl w-fit text-text-light after:inline-block after:w-5 after:h-9 after:bg-linear-to-r after:from-transparent after:to-primary-600 after:to-70%">
+    <h1 class="bg-primary-500 flex gap-3 items-center pl-1 font-medium text-3xl w-fit text-text-light after:inline-block after:w-5 after:h-9 after:bg-linear-to-r after:from-transparent after:to-primary-600 after:to-70%">
       {title}
     </h1>
     <h3 class="max-w-xl pl-1">
@@ -40,4 +40,9 @@ import DefaultButton from "./DefaultButton.astro";
 		localStorage.setItem('theme', localStorage.getItem('theme') == 'dark' ? 'light' : 'dark')
     document.querySelector('meta[name="color-scheme"]')?.setAttribute("content", localStorage.getItem('theme') || 'dark')
   });
+
+  const btnMenu = document.getElementById("btnMenu");
+  btnMenu?.addEventListener('mousedown', () => {
+    document.getElementById('modal')?.classList.remove('hidden')
+  })
 </script>
