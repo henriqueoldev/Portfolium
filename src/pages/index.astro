@@ -7,10 +7,11 @@ import ContentSection from "../components/UI/ContentSection.astro"
 import GithubRepos from "../components/Utils/GithubRepos.astro"
 import LocalProjects from "../components/Utils/LocalProjects.astro"
 import Spinner from "../components/UI/Spinner.astro"
-Spinner
+import Loading from "../components/UI/Loading.astro";
 ---
 
 <Layout>
+	<Loading/>
 	<Container>
 		<ProfileCard title={userData.name} desc={userData.description} img={userData.profilePicture} socialLinks={userData.socialLinks}/>
 		<ContentSection title="Projects">

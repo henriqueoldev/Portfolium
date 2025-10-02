@@ -2,7 +2,7 @@
 title: Smart Home Dashboard
 description: An interactive web application that allows users to monitor and control smart home devices from a single interface, utilizing IoT technology.
 languages: [JavaScript, React, Node.js, MQTT, CSS]
-imageUrl: https://placehold.co/1920x1080
+imageUrl: /media/ProjectsImg/smarthome.webp
 date: 2025-09-28T00:00:00Z
 ---
 # Smart Home Dashboard

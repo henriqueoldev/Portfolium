@@ -2,7 +2,7 @@
 title: Virtual Reality Fitness App
 description: An immersive fitness application that combines virtual reality with workout routines, making exercise engaging and fun.
 languages: [JavaScript, A-Frame, WebXR, HTML, CSS]
-imageUrl: https://placehold.co/1920x1080
+imageUrl: /media/ProjectsImg/aifitness.webp
 date: 2025-09-28T00:00:00Z
 ---
 # Virtual Reality Fitness App

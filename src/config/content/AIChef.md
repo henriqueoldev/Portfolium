@@ -2,7 +2,7 @@
 title: AI-Powered Recipe Generator
 description: A web application that uses machine learning to suggest recipes based on available ingredients, promoting culinary creativity.
 languages: [Python, Flask, TensorFlow, HTML, CSS]
-imageUrl: https://placehold.co/1920x1080
+imageUrl: /media/ProjectsImg/aichef.webp
 date: 2025-09-28T00:00:00Z
 ---
 # AI-Powered Recipe Generator

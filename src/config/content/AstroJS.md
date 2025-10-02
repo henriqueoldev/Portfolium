@@ -2,8 +2,8 @@
 title: AstroJS
 description: A modern static site generator that allows developers to build fast, content-focused websites using their favorite frameworks and libraries.
 languages: [JavaScript, TypeScript, HTML, CSS]
-imageUrl: https://placehold.co/1920x1080
-date: 2025-09-28T00:00:00Z
+imageUrl: /media/ProjectsImg/astrojs.webp
+date: 2022-09-11T00:00:00Z
 ---
 # AstroJS
 

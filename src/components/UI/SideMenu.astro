@@ -18,9 +18,11 @@ import DefaultButton from "./DefaultButton.astro"
 </nav>
 
 <script>
-    document.querySelectorAll('#closeModal')?.forEach((item) => {
-        item.addEventListener('mousedown', () => {
-            document.getElementById('modal')?.classList.add('hidden')
+    document.addEventListener('astro:page-load', () => {
+        document.querySelectorAll('#closeModal')?.forEach((item) => {
+            item.addEventListener('mousedown', () => {
+                document.getElementById('modal')?.classList.add('hidden')
+            })
         })
     })
 </script>

@@ -29,7 +29,8 @@ import DefaultButton from "./DefaultButton.astro";
 </header>
 
 <script>
-  const btnHome = document.getElementById("btnHome");
+  document.addEventListener('astro:page-load', () => {
+    const btnHome = document.getElementById("btnHome");
   btnHome?.addEventListener("mousedown", () => {
     window.location.href = "/";
   });
@@ -44,5 +45,6 @@ import DefaultButton from "./DefaultButton.astro";
   const btnMenu = document.getElementById("btnMenu");
   btnMenu?.addEventListener('mousedown', () => {
     document.getElementById('modal')?.classList.remove('hidden')
+  })
   })
 </script>

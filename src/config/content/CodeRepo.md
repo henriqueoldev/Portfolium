@@ -2,8 +2,8 @@
 title: Code Repository
 description: A collaborative platform for developers to share, manage, and contribute to open-source projects, inspired by the iconic GitHub Octocat.
 languages: [JavaScript, Node.js, Express, MongoDB, Markdown]
-imageUrl: https://placehold.co/1920x1080
-date: 2025-09-28T00:00:00Z
+imageUrl: /media/ProjectsImg/react.webp
+date: 2023-09-07T00:00:00Z
 ---
 # Octocat's Code Repository
 
