@@ -10,7 +10,7 @@ import Spinner from "../components/UI/Spinner.astro"
 import Loading from "../components/UI/Loading.astro";
 ---
 
-<Layout>
+<Layout title={userData.shortDesc + ' | Resume and Portfolio'}>
 	<Loading/>
 	<Container>
 		<ProfileCard title={userData.name} desc={userData.description} img={userData.profilePicture} socialLinks={userData.socialLinks}/>
