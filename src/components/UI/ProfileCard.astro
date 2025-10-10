@@ -12,18 +12,22 @@ interface Props {
 const {img, title, desc, socialLinks} = Astro.props
 ---
 
-<section class="h-full flex flex-col sm:flex-row gap-5 align-center items-center p-5 rounded-xl bg-fg-light/50 dark:bg-fg-dark backdrop-blur-[1rem] 2xl:text-lg">
+<section class="overflow-hidden h-full flex flex-col sm:flex-row gap-5 align-center items-center p-5 rounded-xl bg-fg-light/50 dark:bg-fg-dark backdrop-blur-[1rem] 2xl:text-lg">
     <div class=" min-w-[32%] max-w-[32%] lg:min-w-[20%] lg:max-w-[20%] aspect-square flex align-center justify-center gap-5 rounded-full border-3 border-fg-light-400 dark:border-fg-dark-700 overflow-hidden">
         <img src={img} alt="User Picture" class="w-full aspect-square object-cover">
     </div>
-    <div>
+    <div class="w-full">
         <a href="/resume" class="flex items-center gap-1"><h1 class="text-center sm:text-left font-medium text-3xl 2xl:text-4xl">{title}</h1><LinkIcon/></a>
-        <Liner/>
+        <div class="flex justify-center sm:justify-start items-center">
+            <div id="pCardLiner" class="w-full">
+                <Liner/>
+            </div>
+        </div>
         <p class="text-justify">{desc}</p>
-        <div class="flex align-center justify-center sm:justify-start gap-2 mt-1">
+        <div class="flex items-center gap-2 mt-1">
             {
             Object.keys(socialLinks).map(link => (
-                    <a href={socialLinks[link].link} target="_blank" rel="noopener noreferrer">
+                    <a id="socialLink" href={socialLinks[link].link} target="_blank" rel="noopener noreferrer">
                         <SocialIcon socialName={socialLinks[link].name} iconLink={socialLinks[link].iconLink}/>
                     </a>
                 ))
@@ -31,3 +35,36 @@ const {img, title, desc, socialLinks} = Astro.props
         </div>
     </div>
 </section>
+
+<script>
+    import { gsap } from "gsap";
+    gsap.from('#socialLink',
+        {opacity: 0, duration: 1, delay: .5, stagger: .2}
+    )
+    gsap.from('#pCardLiner',
+        {width: 0, delay: 1, duration: 1, stagger: .2}
+    )
+
+    document.addEventListener('astro:page-load', () => {
+        document.querySelectorAll('#socialLink').forEach(
+            (element) => {
+                const anim = gsap.fromTo(element,
+                        {rotation: 8, duration: .3, repeat: -1},
+                        {rotation: -8, duration: .3, repeat: -1, yoyo: true, ease: 'circ.inOut'}
+                    )
+                const reset = gsap.set(element, {rotation: 0, duration: 0})
+                    anim.pause()
+                    reset.play()
+                element.addEventListener('mouseover', () => {
+                    anim.play()
+                })
+                element.addEventListener('mouseout', () => {
+                    anim.restart()
+                    anim.pause()
+                    reset.restart()
+                })
+            }
+        )
+    })
+
+</script>

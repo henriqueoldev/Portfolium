@@ -29,6 +29,7 @@ import DefaultButton from "./DefaultButton.astro";
 </header>
 
 <script>
+  import { gsap } from "gsap";
   document.addEventListener('astro:page-load', () => {
     const btnHome = document.getElementById("btnHome");
   btnHome?.addEventListener("mousedown", () => {
@@ -44,7 +45,25 @@ import DefaultButton from "./DefaultButton.astro";
 
   const btnMenu = document.getElementById("btnMenu");
   btnMenu?.addEventListener('mousedown', () => {
-    document.getElementById('modal')?.classList.remove('hidden')
-  })
+      gsap.timeline()
+      .set(
+        '#modal',
+        {display: 'flex'}
+      )
+      .to(
+        '#modal',
+        {opacity: 1, duration: .05}
+      )
+      .fromTo(
+        '#modalNav',
+        {x: '100%', duration: .05},
+        {x: 0}
+      )
+      .fromTo(
+        '.contentListItem',
+        {x: '100%', duration: .1},
+        {x: 0, stagger: .05}
+      )
+    })
   })
 </script>

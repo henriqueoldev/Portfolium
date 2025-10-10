@@ -18,7 +18,9 @@ if (stars) {
     <div class="flex flex-col w-full">
         <img class="w-full max-h-50 object-cover rounded-lg indent-[100%] text-[0px] whitespace-nowrap overflow-hidden" src={imageUrl} alt={'Image of a project named: ' + title} />
         <div class="flex justify-between gap-2">
-            <h3 class="text-lg font-bold overflow-hidden text-ellipsis text-nowrap first-letter:uppercase">{title}</h3>
+            <div class="overflow-hidden">
+                <h3 id={title + Math.floor((Math.random() * 1000))} class="contentCardTitle text-lg font-bold overflow-hidden text-ellipsis text-nowrap first-letter:uppercase">{title}</h3>
+            </div>
             <p class="text-nowrap">{starsText}</p>
         </div>
         <p class="break-all">{description}</p>
@@ -34,8 +36,33 @@ if (stars) {
 
 <script>
     import { gsap } from "gsap";
+
     gsap.fromTo('#contentCard',
-    {scrollTrigger: '#contentCard', y: 200},
-    {y: 0, delay: .2},
+        {opacity: 0, y: 100},
+        {y: 0, opacity: 1, delay: .5, duration: 1, stagger: .2},
     );
+    // If card title overflows add card scroll on hover
+    document.addEventListener('astro:page-load', 
+        () => {
+            document.querySelectorAll('.contentCardTitle').forEach( element => {
+                    if(element.offsetWidth < element.scrollWidth) {
+                        const card = element.parentElement?.parentElement?.parentElement?.parentElement;
+                        const anim = gsap.fromTo(element,
+                            {x: '0%'},
+                            {textOverflow: 'clip', overflow: 'visible', x: '-50%', duration: 3, repeat: -1, yoyo: true, ease: 'power1.inOut', paused: true}
+                        );
+                        card?.addEventListener('mouseover', () => {
+                            anim.play()
+                        })
+                        card?.addEventListener('mouseleave', () => {
+                            console.log('a');
+                            
+                            anim.restart()
+                            anim.pause()
+                        })
+                    }
+                }
+            )
+        }
+    )
 </script>
