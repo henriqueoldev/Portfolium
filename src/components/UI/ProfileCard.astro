@@ -1,70 +1,69 @@
 ---
-import { LinkIcon } from '@phosphor-icons/react'
-import SocialIcon from './SocialIcon.astro'
-import Liner from './Liner.astro'
+import { LinkIcon } from "@phosphor-icons/react";
+import Liner from "./Liner.astro";
+import SocialIcon from "./SocialIcon.astro";
+
+interface SocialLink {
+  iconLink: string;
+  name: string;
+  link: string;
+}
 
 interface Props {
-    img: string,
-    title: string,
-    desc: string,
-    socialLinks: any
+  img: string;
+  title: string;
+  desc: string;
+  socialLinks: Record<string, SocialLink>;
 }
-const {img, title, desc, socialLinks} = Astro.props
+
+const { img, title, desc, socialLinks } = Astro.props;
 ---
 
-<section class="overflow-hidden h-full flex flex-col sm:flex-row gap-5 align-center items-center p-5 rounded-xl bg-fg-light/50 dark:bg-fg-dark backdrop-blur-[1rem] 2xl:text-lg">
-    <div class=" min-w-[32%] max-w-[32%] lg:min-w-[20%] lg:max-w-[20%] aspect-square flex align-center justify-center gap-5 rounded-full border-3 border-fg-light-400 dark:border-fg-dark-700 overflow-hidden">
-        <img src={img} alt="User Picture" class="w-full aspect-square object-cover">
+<section
+  class="flex h-full flex-col items-center gap-5 overflow-hidden rounded-xl bg-fg-light/60 p-5 backdrop-blur-md sm:flex-row 2xl:text-lg dark:bg-fg-dark"
+>
+  <div
+    class="aspect-square w-32 shrink-0 overflow-hidden rounded-full border-[3px] border-fg-light-400 sm:w-40 dark:border-fg-dark-700"
+  >
+    <img
+      src={img}
+      alt={`Portrait of ${title}`}
+      class="aspect-square w-full object-cover"
+      width="320"
+      height="320"
+    />
+  </div>
+
+  <div class="w-full">
+    <a href="/resume" class="group flex items-center justify-center gap-1 sm:justify-start">
+      <h1 class="text-3xl font-medium 2xl:text-4xl">{title}</h1>
+      <LinkIcon
+        class="transition-transform duration-200 group-hover:translate-x-0.5"
+        aria-hidden="true"
+      />
+    </a>
+
+    <div class="my-1">
+      <Liner />
     </div>
-    <div class="w-full">
-        <a href="/resume" class="flex items-center gap-1"><h1 class="text-center sm:text-left font-medium text-3xl 2xl:text-4xl">{title}</h1><LinkIcon/></a>
-        <div class="flex justify-center sm:justify-start items-center">
-            <div id="pCardLiner" class="w-full">
-                <Liner/>
-            </div>
-        </div>
-        <p class="text-justify">{desc}</p>
-        <div class="flex items-center gap-2 mt-1">
-            {
-            Object.keys(socialLinks).map(link => (
-                    <a id="socialLink" href={socialLinks[link].link} target="_blank" rel="noopener noreferrer">
-                        <SocialIcon socialName={socialLinks[link].name} iconLink={socialLinks[link].iconLink}/>
-                    </a>
-                ))
-            }
-        </div>
+
+    <p class="text-left md:text-justify">{desc}</p>
+
+    <div class="mt-2 flex items-center gap-2">
+      {
+        Object.entries(socialLinks).map(([key, social]) => (
+          <a
+            href={social.link}
+            class="socialLink"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={social.name}
+            title={social.name}
+          >
+            <SocialIcon socialName={social.name} iconLink={social.iconLink} />
+          </a>
+        ))
+      }
     </div>
+  </div>
 </section>
-
-<script>
-    import { gsap } from "gsap";
-    gsap.from('#socialLink',
-        {opacity: 0, duration: 1, delay: .5, stagger: .2}
-    )
-    gsap.from('#pCardLiner',
-        {width: 0, delay: 1, duration: 1, stagger: .2}
-    )
-
-    document.addEventListener('astro:page-load', () => {
-        document.querySelectorAll('#socialLink').forEach(
-            (element) => {
-                const anim = gsap.fromTo(element,
-                        {rotation: 8, duration: .3, repeat: -1},
-                        {rotation: -8, duration: .3, repeat: -1, yoyo: true, ease: 'circ.inOut'}
-                    )
-                const reset = gsap.set(element, {rotation: 0, duration: 0})
-                    anim.pause()
-                    reset.play()
-                element.addEventListener('mouseover', () => {
-                    anim.play()
-                })
-                element.addEventListener('mouseout', () => {
-                    anim.restart()
-                    anim.pause()
-                    reset.restart()
-                })
-            }
-        )
-    })
-
-</script>

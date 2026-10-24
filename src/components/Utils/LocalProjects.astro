@@ -1,21 +1,18 @@
 ---
-import { getCollection, getEntry } from 'astro:content';
-import ContentCard from '../UI/ContentCard.astro';
+import ContentCard from "../UI/ContentCard.astro";
+import { getSortedProjects } from "../../lib/projects";
 
-const projects = await getCollection('projects');
-
+const projects = await getSortedProjects();
 ---
 
 {
-    projects.map(
-        project => (
-            <ContentCard
-                title={project.data.title}
-                description={project.data.description}
-                linkUrl={"/"+ project.id}
-                tags={project.data.languages || ['Other']}
-                imageUrl={project.data.imageUrl}
-            />
-        )
-    )
+  projects.map((project) => (
+    <ContentCard
+      title={project.data.title}
+      description={project.data.description}
+      linkUrl={`/${project.id}`}
+      tags={project.data.languages ?? ["Other"]}
+      imageUrl={project.data.imageUrl}
+    />
+  ))
 }

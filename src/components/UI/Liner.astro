@@ -1,1 +1,19 @@
-<div class="w-full h-[3px] bg-linear-to-r from-transparent via-emerald-500 sm:via-none sm:from-emerald-500 to-transparent sm:to-100% sm:from-50% rounded-lg"></div>
+---
+interface Props {
+  /** Fades only to the right — used inside article headers. */
+  flush?: boolean;
+}
+
+const { flush = false } = Astro.props;
+---
+
+<div
+  class:list={[
+    "liner h-[3px] w-full rounded-lg bg-linear-to-r",
+    flush
+      ? "from-primary-500 to-transparent"
+      : "from-transparent via-primary-500 to-transparent sm:from-primary-500 sm:via-primary-500 sm:to-transparent",
+  ]}
+  aria-hidden="true"
+>
+</div>

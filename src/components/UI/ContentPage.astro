@@ -1,0 +1,53 @@
+---
+import Liner from "./Liner.astro";
+import { formatDate, toISODate } from "../../lib/format";
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  date?: Date | string | null;
+  imageUrl?: string;
+}
+
+const { title, subtitle, date, imageUrl } = Astro.props;
+const formattedDate = formatDate(date);
+const isoDate = toISODate(date);
+---
+
+<section class="container p-2 pt-6">
+  <header class="flex flex-wrap items-baseline justify-between gap-2">
+    <h1 class="text-3xl font-bold lg:text-4xl">{title}</h1>
+    {
+      formattedDate && (
+        <time
+          class="text-base text-text-light/60 lg:text-lg dark:text-text-dark/60"
+          datetime={isoDate}
+        >
+          {formattedDate}
+        </time>
+      )
+    }
+  </header>
+
+  {subtitle && <p class="text-base text-text-light/70 dark:text-text-dark/70">{subtitle}</p>}
+
+  <div class="my-3"><Liner flush /></div>
+
+  {
+    imageUrl && (
+      <div class="my-4 flex w-full justify-center">
+        <img
+          class="max-w-full rounded-lg object-cover lg:max-w-3xl"
+          src={imageUrl}
+          alt={title}
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    )
+  }
+
+  <div class="mdContent text-lg">
+    <slot />
+  </div>
+</section>

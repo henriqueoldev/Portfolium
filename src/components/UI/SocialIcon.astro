@@ -1,12 +1,21 @@
 ---
 interface Props {
-    iconLink: string,
-    socialName: string
+  iconLink: string;
+  socialName: string;
 }
 
-const {iconLink, socialName} = Astro.props
+const { iconLink, socialName } = Astro.props;
 ---
 
-<div class="p-1 w-9 2xl:size-12 bg-primary-500 hover:bg-primary-dark rounded-sm">
-    <img class="size-full flex align-center justify-center" src={iconLink} alt={socialName}>
+<div
+  class="socialIcon flex size-9 items-center justify-center rounded-sm bg-primary-500 p-1 transition-colors duration-200 hover:bg-primary-700 2xl:size-12"
+>
+  <img
+    class="size-full object-contain"
+    src={iconLink}
+    alt=""
+    aria-hidden="true"
+    loading="lazy"
+  />
+  <span class="sr-only">{socialName}</span>
 </div>

@@ -1,10 +1,19 @@
 ---
 interface Props {
-  btnId: string | null;
+  /** Accessible name — every icon-only button needs one. */
+  label: string;
+  action?: "home" | "theme" | "menu" | "close-menu";
 }
-const { btnId } = Astro.props;
+
+const { label, action } = Astro.props;
 ---
 
-<button id={btnId || ''} class="cursor-pointer p-1 border-1 border-text-light dark:border-text-dark rounded hover:bg-fg-light-400 dark:hover:bg-fg-dark-700 hover:shadow-sm">
+<button
+  type="button"
+  class="btn"
+  aria-label={label}
+  title={label}
+  data-action={action}
+>
   <slot />
 </button>

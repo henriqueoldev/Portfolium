@@ -1,41 +1,72 @@
 ---
 import ContentCard from "../UI/ContentCard.astro";
-import { getSecret, } from 'astro:env/server';
+import { GITHUB_API_KEY } from "astro:env/server";
+
+interface Repo {
+  id: number;
+  name: string;
+  html_url: string;
+  description: string | null;
+  language: string | null;
+  stargazers_count: number;
+  fork: boolean;
+}
 
 interface Props {
-  githubUserAPIURL: string
+  githubUserAPIURL: string;
 }
+
 const { githubUserAPIURL } = Astro.props;
 
-const githubReposResp = await fetch(githubUserAPIURL+'/repos?sort=updated&direction=desc&per_page=100', {
-    method: 'GET',
-    headers: {
-        'Authorization': 'token ' + getSecret('GITHUB_API_KEY'),
-        'Accept': 'application/vnd.github+json'
-    }
-})
-const reposData = await githubReposResp.json()
+let repos: Repo[] = [];
+let error: string | null = null;
 
+try {
+  const headers: Record<string, string> = {
+    Accept: "application/vnd.github+json",
+  };
+
+  // Optional: unauthenticated requests work but share a 60 req/h rate limit.
+  if (GITHUB_API_KEY) headers.Authorization = `Bearer ${GITHUB_API_KEY}`;
+
+  const response = await fetch(
+    `${githubUserAPIURL}/repos?sort=updated&direction=desc&per_page=100`,
+    { headers },
+  );
+
+  if (!response.ok) {
+    throw new Error(`GitHub API answered with ${response.status}`);
+  }
+
+  const data = await response.json();
+  if (!Array.isArray(data)) throw new Error("Unexpected GitHub API payload");
+
+  repos = (data as Repo[]).filter((repo) => !repo.fork);
+} catch (cause) {
+  error = cause instanceof Error ? cause.message : "Unknown error";
+  console.error("[GithubRepos]", error);
+}
 ---
+
 {
-  reposData?.map(
-    (repo: {
-      id: number;
-      name: string;
-      html_url: string;
-      description: string | null;
-      language: string;
-      stargazers_count: number;
-    }) => (
-        <ContentCard
-            title={repo.name}
-            description={repo.description || 'This repo doesn\'t have a Description :('}
-            imageUrl=""
-            linkUrl={repo.html_url}
-            tags={[repo.language || 'Other']}
-            stars={repo.stargazers_count}
-            target="_blank"
-        />
-    )
+  error ? (
+    <p class="col-span-full rounded-lg bg-fg-light p-4 text-center text-sm text-text-light/70 dark:bg-fg-dark dark:text-text-dark/70">
+      Could not load the GitHub repositories right now.
+    </p>
+  ) : repos.length === 0 ? (
+    <p class="col-span-full rounded-lg bg-fg-light p-4 text-center text-sm text-text-light/70 dark:bg-fg-dark dark:text-text-dark/70">
+      No public repositories to show yet.
+    </p>
+  ) : (
+    repos.map((repo) => (
+      <ContentCard
+        title={repo.name}
+        description={repo.description}
+        linkUrl={repo.html_url}
+        tags={[repo.language ?? "Other"]}
+        stars={repo.stargazers_count}
+        target="_blank"
+      />
+    ))
   )
 }

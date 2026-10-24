@@ -1,14 +1,20 @@
 ---
-import { CubeIcon } from "@phosphor-icons/react/dist/ssr"
+import { CubeIcon } from "@phosphor-icons/react/dist/ssr";
+
 interface Props {
-    title: string,
-    href: string
+  title: string;
+  href: string;
 }
-const {title, href} = Astro.props
+
+const { title, href } = Astro.props;
 ---
-<li>
-    <a href={href} class="contentListItem flex justify-between items-center p-2 m-2 rounded-lg bg-fg-light hover:bg-fg-light-400 dark:bg-fg-dark dark:hover:bg-fg-dark-700 cursor-pointer">
-        <h3>{'| '+title}</h3>
-        <CubeIcon/>
-    </a>
+
+<li data-menu-item>
+  <a
+    href={href}
+    class="contentListItem m-1 flex items-center justify-between gap-2 rounded-lg bg-fg-light p-3 transition-colors hover:bg-fg-light-400 dark:bg-fg-dark dark:hover:bg-fg-dark-700"
+  >
+    <span class="truncate">{title}</span>
+    <CubeIcon class="shrink-0" aria-hidden="true" />
+  </a>
 </li>

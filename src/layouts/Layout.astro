@@ -1,58 +1,110 @@
 ---
 import userData from "../config/UserData.json";
-import Header from "../components/UI/Header.astro"
-import "../styles/global.css";
+import Header from "../components/UI/Header.astro";
 import SideMenu from "../components/UI/SideMenu.astro";
+import Loading from "../components/UI/Loading.astro";
 import { ClientRouter } from "astro:transitions";
+import { absoluteUrl } from "../lib/format";
+import "../styles/global.css";
 
 interface Props {
-	title: string
+  title: string;
 }
-const {title} = Astro.props
+
+const { title } = Astro.props;
+const pageTitle = `${userData.name} - ${title}`;
+const canonical = absoluteUrl(userData.siteURL, "/");
+const socialImage = absoluteUrl(userData.siteURL, "/img/icons/portfolium.png");
 ---
+
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/style.css"/>
-		<meta name="generator" content={Astro.generator} />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="color-scheme" content="dark">
-		
-		<!-- Open Graph Meta Tags -->
-		<meta property="og:title" content={userData.name + ' - Resume and Portfolio'} />
-		<meta property="og:description" content={userData.shortDesc} />
-		<meta property="og:image" content={userData.siteURL + '/img/icons/portfolium.png'} />
-		<meta property="og:url" content={userData.siteURL} />
-		<meta property="og:type" content="website" />
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f9fafb" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#111827" />
 
-		<!-- Essential SEO Meta Tags -->
-		<meta name="title" content={userData.name + ' - ' + title} />
-		<meta name="description" content={userData.shortDesc} />
-		<meta name="keywords" content={"Portfolio, Resume, Projects, Personal, " + userData.name} />
-		<meta name="robots" content="index, follow" />
-		<link rel="canonical" href={userData.siteURL} />
+    <!-- Applies the theme before first paint to avoid a flash of the wrong colors -->
+    <script is:inline>
+      (() => {
+        try {
+          const stored = localStorage.getItem("theme");
+          const theme =
+            stored === "light" || stored === "dark"
+              ? stored
+              : window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+          document.documentElement.classList.toggle("dark", theme === "dark");
+          localStorage.setItem("theme", theme);
+          document
+            .querySelector('meta[name="color-scheme"]')
+            ?.setAttribute("content", theme);
+        } catch {
+          document.documentElement.classList.add("dark");
+        }
+      })();
+    </script>
 
-		<title>{userData.name + ' - ' + title}</title>
-	</head>
-	<body class="bg-light dark:bg-bg-dark text-text-light dark:text-text-dark overflow-hidden" transition:animate="fade">
-		<SideMenu/>
-		<div class="flex flex-col justify-center items-center">
-			<Header title={userData.name} subTitle={userData.shortDesc}/>
-			<slot/>
-		</div>
-		<ClientRouter/>
-	</body>
-	<script is:inline>
-		document.addEventListener('astro:page-load', () => {
-			document.querySelector('html')?.classList.add(localStorage.getItem('theme') || 'dark')
-			document.querySelector('meta[name="color-scheme"]')?.setAttribute("content", localStorage.getItem('theme') || 'dark')
-			localStorage.setItem('theme', localStorage.getItem('theme') ? localStorage.getItem('theme') || '' : (window.matchMedia("(prefers-color-scheme: dark)") ? 'dark' : 'light'))
-			if (localStorage.getItem('theme') == 'dark') {
-				document.querySelector('html')?.classList.add('dark')
-			}
-			document.body.classList.remove('overflow-hidden')
-			document.querySelector('.loading')?.classList.add('hidden')
-		})
-	</script>
+    <!-- Safety net: never leave the loading overlay blocking the page -->
+    <noscript><style>.loading { display: none; }</style></noscript>
+    <script is:inline>
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          document.querySelector(".loading")?.classList.add("hidden");
+          document.body.classList.remove("overflow-hidden");
+        }, 2500);
+      });
+    </script>
+
+    <!-- Open Graph / social -->
+    <meta property="og:site_name" content={userData.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={userData.shortDesc} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={userData.shortDesc} />
+    <meta name="twitter:image" content={socialImage} />
+
+    <!-- SEO -->
+    <meta name="description" content={userData.shortDesc} />
+    <meta name="keywords" content={`Portfolio, Resume, Projects, Personal, ${userData.name}`} />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonical} />
+
+    <title>{pageTitle}</title>
+  </head>
+
+  <body
+    class="overflow-hidden bg-bg-light text-text-light dark:bg-bg-dark dark:text-text-dark"
+    transition:animate="fade"
+  >
+    <Loading />
+    <SideMenu />
+
+    <div class="flex min-h-screen w-full flex-col items-center">
+      <Header title={userData.name} subTitle={userData.shortDesc} />
+      <main class="flex w-full flex-1 flex-col items-center">
+        <slot />
+      </main>
+    </div>
+
+    <ClientRouter />
+  </body>
 </html>
+
+<script>
+  import { initAnimations } from "../lib/animations";
+  import { initSite } from "../lib/site";
+
+  document.addEventListener("astro:page-load", () => {
+    initSite();
+    initAnimations();
+  });
+</script>

@@ -1,7 +1,13 @@
 {
-  "name": "",
+  "name": "portfolium",
+  "description": "Personal portfolio and resume built with Astro, Tailwind CSS and GSAP.",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",

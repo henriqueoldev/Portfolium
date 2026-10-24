@@ -1,15 +1,12 @@
 ---
 import ContentListItem from "../UI/ContentListItem.astro";
-import { getCollection, getEntry } from 'astro:content';
+import { getSortedProjects } from "../../lib/projects";
 
-const projects = await getCollection('projects');
-const { pageProject } = Astro.props;
+const projects = await getSortedProjects();
 ---
 
 {
-    projects.map(
-        project => (
-            <ContentListItem href={'/' + project.id || ''} title={project.data.title}/>
-        )
-    )
+  projects.map((project) => (
+    <ContentListItem href={`/${project.id}`} title={project.data.title} />
+  ))
 }

@@ -3,78 +3,147 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @font-face {
-    font-family: Inter;
-    src: url(../fonts/Inter.ttf);
+  font-family: "Inter";
+  src: url("../fonts/Inter.ttf") format("truetype");
+  font-display: swap;
 }
 
 @font-face {
-    font-family: Google-Code;
-    src: url(../fonts/GoogleSansCode.ttf);
+  font-family: "Google-Code";
+  src: url("../fonts/GoogleSansCode.ttf") format("truetype");
+  font-display: swap;
 }
 
-*{
-    font-family: Inter, sans-serif;
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Google-Code", ui-monospace, SFMono-Regular, monospace;
 }
 
-/*Markdown Config*/
+@layer base {
+  html {
+    scrollbar-gutter: stable;
+  }
+
+  ::selection {
+    background-color: var(--color-primary-600);
+    color: var(--color-white);
+  }
+}
+
+@layer components {
+  /* Single button style shared by every icon control in the UI. */
+  .btn {
+    @apply inline-flex cursor-pointer items-center justify-center rounded border border-text-light p-1
+      transition-colors duration-200 hover:bg-fg-light-400 hover:shadow-sm
+      focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500
+      dark:border-text-dark dark:hover:bg-fg-dark-700;
+  }
+}
+
+/* Markdown content */
 
 .mdContent {
-    line-height: 1.8rem;
+  line-height: 1.8rem;
+  /* Justified text looks gappy in narrow viewports. */
+  text-align: left;
 }
 
-.mdContent h1{
-    font-size: 2rem;
-    margin-bottom: 1rem;
+@media (min-width: 768px) {
+  .mdContent {
+    text-align: justify;
+  }
 }
 
-.mdContent h2{
-    font-size: 1.5rem;
+.mdContent h1 {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  font-weight: 700;
 }
 
-.mdContent hr{
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+.mdContent h2 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
-.mdContent p{
-    margin-bottom: 1rem;
+.mdContent h3 {
+  margin-top: 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
 }
 
-.mdContent table th{
-    background-color: var(--color-primary-600);
-    border: 2px solid var(--color-primary-600);
-    color: var(--color-white);
-    padding: .4rem;
+.mdContent hr {
+  margin-block: 1rem;
+  border-color: var(--color-primary-600);
+  opacity: 0.4;
 }
 
-.mdContent table td{
-    border: 2px solid var(--color-primary-600);
+.mdContent p {
+  margin-bottom: 1rem;
 }
 
-.mdContent a{
-    color: var(--color-primary-500);
+.mdContent a {
+  color: var(--color-primary-500);
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
-.mdContent ul li{
-    margin-left: 1.5rem;
-    list-style: disc;
+.mdContent ul li {
+  margin-left: 1.5rem;
+  list-style: disc;
 }
 
-.mdContent ol li{
-    margin-left: 1.5rem;
-    list-style: decimal;
+.mdContent ol li {
+  margin-left: 1.5rem;
+  list-style: decimal;
 }
 
-.mdContent table td{
-    padding: .3rem;
+.mdContent img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
 }
 
-.mdContent pre{
-    padding: 1rem;
-    font-weight: lighter;
-    border-radius: var(--radius-lg);
+.mdContent blockquote {
+  margin-block: 1rem;
+  border-left: 4px solid var(--color-primary-600);
+  padding-left: 1rem;
+  color: var(--color-primary-700);
+  font-style: italic;
 }
 
-.mdContent pre span{
-    font-family: Google-Code, Courier, monospace;
+.mdContent table {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1rem;
+  overflow-x: auto;
+  border-collapse: collapse;
+}
+
+.mdContent table th {
+  border: 2px solid var(--color-primary-600);
+  background-color: var(--color-primary-600);
+  padding: 0.4rem;
+  color: var(--color-white);
+  text-align: center;
+}
+
+.mdContent table td {
+  border: 2px solid var(--color-primary-600);
+  padding: 0.3rem;
+  text-align: center;
+}
+
+.mdContent pre {
+  overflow-x: auto;
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  font-weight: lighter;
+}
+
+.mdContent pre span,
+.mdContent code {
+  font-family: "Google-Code", ui-monospace, monospace;
 }

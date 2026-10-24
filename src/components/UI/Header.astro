@@ -1,69 +1,46 @@
 ---
-interface Props {
-  title: String;
-  subTitle: String;
-}
-const { title, subTitle } = Astro.props;
-import { ListIcon, HouseSimpleIcon, SunDimIcon } from "@phosphor-icons/react";
+import { HouseSimpleIcon, ListIcon, SunDimIcon } from "@phosphor-icons/react";
 import DefaultButton from "./DefaultButton.astro";
+
+interface Props {
+  title: string;
+  subTitle: string;
+}
+
+const { title, subTitle } = Astro.props;
 ---
 
-<header class="flex justify-between items-center p-5 bg-fg-light dark:bg-fg-dark w-screen shadow-sm">
-  <a href="/" class="flex flex-col">
-    <h1 class="bg-primary-500 flex gap-3 items-center pl-1 font-medium text-3xl w-fit text-text-light after:inline-block after:w-5 after:h-9 after:bg-linear-to-r after:from-transparent after:to-primary-600 after:to-70%">
+<header
+  class="sticky top-0 z-30 flex w-full items-center justify-between gap-4 bg-fg-light/90 p-5 shadow-sm backdrop-blur dark:bg-fg-dark/90"
+>
+  <a href="/" class="flex min-w-0 flex-col">
+    <h1
+      class="flex w-fit items-center gap-3 bg-primary-500 pl-1 text-3xl font-medium text-gray-900 after:inline-block after:h-9 after:w-5 after:bg-linear-to-r after:from-transparent after:to-primary-600 after:to-70%"
+    >
       {title}
     </h1>
-    <h3 class="max-w-xl pl-1">
+    <p class="max-w-xl pl-1 text-sm text-text-light/70 dark:text-text-dark/70">
       {subTitle}
-    </h3>
+    </p>
   </a>
-  <nav>
+
+  <nav aria-label="Main">
     <ul class="flex gap-2 text-3xl text-text-light dark:text-text-dark">
       <li>
-        <DefaultButton btnId="btnHome"><HouseSimpleIcon /></DefaultButton>
+        <DefaultButton label="Go to home page" action="home">
+          <HouseSimpleIcon aria-hidden="true" />
+        </DefaultButton>
       </li>
-      <li><DefaultButton btnId="btnTheme"><SunDimIcon /></DefaultButton></li>
-      <li><DefaultButton btnId="btnMenu"><ListIcon /></DefaultButton></li>
+      <li>
+        <DefaultButton label="Switch color theme" action="theme">
+          <SunDimIcon aria-hidden="true" />
+        </DefaultButton>
+      </li>
+      <li>
+        <DefaultButton label="Open projects menu" action="menu">
+          <ListIcon aria-hidden="true" />
+        </DefaultButton>
+      </li>
     </ul>
   </nav>
 </header>
-
-<script>
-  import { gsap } from "gsap";
-  document.addEventListener('astro:page-load', () => {
-    const btnHome = document.getElementById("btnHome");
-  btnHome?.addEventListener("mousedown", () => {
-    window.location.href = "/";
-  });
-
-  const btnTheme = document.getElementById("btnTheme");
-  btnTheme?.addEventListener("mousedown", () => {
-    document.querySelector('html')?.classList.toggle('dark')
-		localStorage.setItem('theme', localStorage.getItem('theme') == 'dark' ? 'light' : 'dark')
-    document.querySelector('meta[name="color-scheme"]')?.setAttribute("content", localStorage.getItem('theme') || 'dark')
-  });
-
-  const btnMenu = document.getElementById("btnMenu");
-  btnMenu?.addEventListener('mousedown', () => {
-      gsap.timeline()
-      .set(
-        '#modal',
-        {display: 'flex'}
-      )
-      .to(
-        '#modal',
-        {opacity: 1, duration: .05}
-      )
-      .fromTo(
-        '#modalNav',
-        {x: '100%', duration: .05},
-        {x: 0}
-      )
-      .fromTo(
-        '.contentListItem',
-        {x: '100%', duration: .1},
-        {x: 0, stagger: .05}
-      )
-    })
-  })
-</script>

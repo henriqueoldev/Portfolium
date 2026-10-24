@@ -1,15 +1,18 @@
 ---
+import Liner from "./Liner.astro";
+
 interface Props {
-    title: string
+  title: string;
 }
-const {title} = Astro.props
+
+const { title } = Astro.props;
 ---
-<section class="mt-5">
-    <div>
-        <h1 class="text-3xl 2xl:text-4xl">{title}</h1>
-    </div>
-    <div class="w-full h-[3px] bg-linear-to-r from-gray-500 from-50% to-transparent rounded-lg mb-2"></div>
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 w-full gap-2 p-2 content-center">
-        <slot/>
-    </div>
+
+<section class="mt-6">
+  <h2 class="text-3xl 2xl:text-4xl">{title}</h2>
+  <div class="mb-2 mt-1"><Liner flush /></div>
+
+  <div class="grid w-full grid-cols-1 content-center gap-2 p-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <slot />
+  </div>
 </section>
