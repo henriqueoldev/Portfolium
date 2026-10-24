@@ -1,4 +1,5 @@
 ---
+import { ArrowLeftIcon } from "@phosphor-icons/react/dist/ssr";
 import Liner from "./Liner.astro";
 import { formatDate, toISODate } from "../../lib/format";
 
@@ -7,14 +8,36 @@ interface Props {
   subtitle?: string;
   date?: Date | string | null;
   imageUrl?: string;
+  /** Renders a back link above the title when set. */
+  backHref?: string;
+  backLabel?: string;
 }
 
-const { title, subtitle, date, imageUrl } = Astro.props;
+const {
+  title,
+  subtitle,
+  date,
+  imageUrl,
+  backHref,
+  backLabel = "Back",
+} = Astro.props;
 const formattedDate = formatDate(date);
 const isoDate = toISODate(date);
 ---
 
 <section class="container p-2 pt-6">
+  {
+    backHref && (
+      <a
+        href={backHref}
+        class="-ml-2 mb-3 inline-flex items-center gap-1 rounded-md px-2 py-1 text-sm font-medium text-text-light/70 transition-colors hover:bg-fg-light-400 hover:text-text-light focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 dark:text-text-dark/70 dark:hover:bg-fg-dark-700 dark:hover:text-text-dark"
+      >
+        <ArrowLeftIcon aria-hidden="true" />
+        {backLabel}
+      </a>
+    )
+  }
+
   <header class="flex flex-wrap items-baseline justify-between gap-2">
     <h1 class="text-3xl font-bold lg:text-4xl">{title}</h1>
     {

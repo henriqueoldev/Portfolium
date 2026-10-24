@@ -1,5 +1,5 @@
 ---
-import { XIcon } from "@phosphor-icons/react";
+import { FileTextIcon, XIcon } from "@phosphor-icons/react/dist/ssr";
 import DefaultButton from "./DefaultButton.astro";
 import LocalProjectsList from "../Utils/LocalProjectsList.astro";
 ---
@@ -33,5 +33,16 @@ import LocalProjectsList from "../Utils/LocalProjectsList.astro";
     <ul class="flex-1 overflow-y-auto p-2">
       <LocalProjectsList />
     </ul>
+
+    <div class="shrink-0 border-t border-fg-light-400 p-2 dark:border-fg-dark-700">
+      <a
+        href="/resume"
+        data-menu-item
+        class="flex items-center justify-between gap-2 rounded-lg bg-primary-600 px-3 py-3 font-semibold text-white transition-colors hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
+      >
+        <span>Resume</span>
+        <FileTextIcon class="shrink-0" aria-hidden="true" />
+      </a>
+    </div>
   </div>
 </div>
