@@ -28,6 +28,13 @@ function toggleTheme(): void {
   );
 }
 
+// The ClientRouter swaps the attributes of <html> on every navigation, which
+// wipes the `dark` class set by the inline boot script. Re-apply it right after
+// the swap (before paint, so there is no flash of the wrong theme).
+document.addEventListener("astro:after-swap", () => {
+  applyTheme(getPreferredTheme());
+});
+
 /** Wires every `[data-action]` control in the page. Runs on each navigation. */
 export function initSite(): void {
   document.body.classList.remove("overflow-hidden");
